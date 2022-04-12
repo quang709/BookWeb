@@ -1,10 +1,13 @@
 ﻿
 
-@model PaginatedList<Category>
+
+@model IEnumerable<Category>  
 
 
 @{
     ViewData["Title"] = "Index";
+  
+    
 }
 
 
@@ -15,17 +18,7 @@
     <nav class="navbar navbar-main navbar-expand-lg px-0 mx-4 shadow-none border-radius-xl" id="navbarBlur" navbar-scroll="true">
         <div class="container-fluid py-1 px-3">
 
-            <div class="collapse navbar-collapse mt-sm-0 mt-2 me-md-0 me-sm-4" id="navbar">
-                <div class="ms-md-auto pe-md-3 d-flex align-items-center">
-                <form asp-controller="Category" asp-action="Index" >
-                <div class="input-group input-group-outline">
-                   
-                        <input type="text"  name="category_name" placeholder="Search" class="form-control">
-                    </div>
-                </form>
-                </div>
-
-            </div>
+   
         </div>
     </nav>
     <!-- End Navbar -->
@@ -55,7 +48,7 @@
                     <div class="card-body px-0 pb-2">
                         <div class="table-responsive p-0">
  
-                            <table class="table align-items-center mb-0">
+                            <table id="myTable" class="table align-items-center mb-0 ">
                                 <thead>
                                     <tr>
                                         <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">id</th>
@@ -102,26 +95,8 @@
                                   
                                 </tbody>
                             </table>
-                            @{
-    var prevDisabled = !Model.PreviousPage ? "disabled" : "";
-    var nextDisabled = !Model.NextPage ? "disabled" : "";
-}
-
-<a asp-action="Index"
- 
-   asp-route-pageNumber="@(Model.PageIndex - 1)"
-
-   class="btn btn-default @prevDisabled">
-    Previous
-</a>
-<a asp-action="Index"
-  
-   asp-route-pageNumber="@(Model.PageIndex + 1)"
- 
-   class="btn btn-default @nextDisabled">
-    Next
-</a>
-
+                  
+   
 
 
                         </div>
@@ -136,4 +111,12 @@
             </div>
     </main>
 
-  
+  @section Scripts{
+      <script>
+      $(document).ready(function () {
+    $('#myTable').DataTable({
+      
+    });
+});
+      </script>
+  }

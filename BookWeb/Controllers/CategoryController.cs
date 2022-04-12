@@ -1,9 +1,10 @@
-﻿using BookWeb.Data;
+﻿
+using BookWeb.Data;
 using BookWeb.Models;
 using Microsoft.AspNetCore.Mvc;
 using PagedList;
 
-
+using System.Collections.Generic;
 namespace BookWeb.Controllers
 {
     public class CategoryController : Controller
@@ -13,26 +14,19 @@ namespace BookWeb.Controllers
         {
             _db = db;
         }
-
-        public async Task<IActionResult> Index( int pageNumber = 1, string category_name = "")
+        //show
+        public IActionResult Index()
         {
             IEnumerable<Category> categories;
          
-
-            if (category_name != "" && category_name != null)
-            {
-                categories = _db.categories.Where(p => p.Name.Contains(category_name)).OrderByDescending(p => p.Id).ToList();
-                return View(categories);
-            }
-            else
-                categories = _db.categories.OrderByDescending(p => p.Id).ToList();
+                categories = _db.categories.ToList();
 
 
-            return View( await PaginatedList<Category>.CreateAsync(_db.categories, pageNumber, 3));
+            return View(categories);
 
 
         }
-
+        //create
 
         public IActionResult Create()
         {
@@ -53,7 +47,7 @@ namespace BookWeb.Controllers
          return View(obj);
             
         }
-
+        //edit
         public IActionResult Edit(int id)
         {
             if (id == null || id == 0)

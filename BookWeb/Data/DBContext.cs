@@ -11,5 +11,7 @@ namespace BookWeb.Data
         }
         public DbSet<Category> categories { get; set; }
         public object Categories { get; internal set; }
+
+    
     }
 }
